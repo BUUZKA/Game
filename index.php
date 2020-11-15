@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <?php echo "dziala";  ?>
+    <?php echo "dziala"; ?>
 </body>
 </html>
