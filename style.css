@@ -1,0 +1,59 @@
+#tlo {
+width: 100%; 
+height: 100vh; 
+background: url("kosmoe3.jpg"); 
+background-size: cover; 
+background-repeat: no-repeat; 
+}
+#info {
+    font-size: large;
+    position: left;
+    display: inline;
+}
+#wioska {
+    size: 90;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+#nickGracza {
+    background-image: url(ramka.png);
+    background-repeat: no-repeat;
+}
+#lvl {
+    background-image: url(ramka.png);
+    background-repeat: no-repeat;
+}
+#statki {
+    float: right;
+    width: 15%;
+    background-image: url(ramka.png);
+    background-repeat: no-repeat;
+    top: 50%;
+
+
+}
+#iridium {
+    background-image: url(ramka.png);
+    background-repeat: no-repeat;
+}
+#urudium {
+    background-image: url(ramka.png);
+    background-repeat: no-repeat;
+}
+#prometeid {
+    background-image: url(ramka.png);
+    background-repeat: no-repeat;
+}
+#Duranium {
+    background-image: url(ramka.png);
+    background-repeat: no-repeat;
+}
+#Endurium {
+    background-image: url(ramka.png);
+    background-repeat: no-repeat;
+}
+
