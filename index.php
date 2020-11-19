@@ -6,6 +6,26 @@
     <title>Document</title>
 </head>
 <body>
-    <?php echo "dziala"; ?>
+    <pre>
+    <?php
+        session_start();
+        require('./class/village.class.php');
+
+
+        if(!isset($_SESSION['v']))
+        {
+            echo "Tworze nowa wioske";
+            $v = new Village();
+            $_SESSION['v'] = $v;
+        }
+        else
+        {
+            $v = $_SESSION['v'];
+        }
+
+
+        var_dump($v)
+    ?>
+    </pre>
 </body>
 </html>
