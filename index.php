@@ -12,17 +12,23 @@
         require('./class/village.class.php');
 
 
+
+
         if(!isset($_SESSION['v']))
         {
             echo "Tworze nowa wioske";
             $v = new Village();
             $_SESSION['v'] = $v;
+
+            $deltaTime = time();
         }
         else
         {
             $v = $_SESSION['v'];
+            $deltaTime = time() - $_SESSION['time'];
         }
-
+        $v->gain($deltaTime);
+        $_SESSION['time'] = time();
 
         var_dump($v)
     ?>
