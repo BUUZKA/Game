@@ -1,59 +1,37 @@
-#tlo {
-width: 100%; 
-height: 100vh; 
-background: url("kosmoe3.jpg"); 
-background-size: cover; 
-background-repeat: no-repeat; 
-}
-#info {
+body {
+    background: url(https://images4.alphacoders.com/122/thumb-1920-122706.jpg) no-repeat center center fixed;
+    background-size: cover;
     font-size: large;
-    position: left;
-    display: inline;
+    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: auto;
+    text-align: center;
+    color: white;
+  }
+  .div{     
+    text-align: center;
+    size: 150px;
+    color: white; }
+    #obrazek {
+        width: 400px;
+        height: 300px;
+        background: url(mapa.jpg) top left no-repeat; 
+    }
+#wojsko{
+    width: 400px;
+    height: 300px;
+    background: url(https://media.discordapp.net/attachments/544586649292767272/785246854853689355/Rycerz.jpg) top left no-repeat; 
 }
-#wioska {
-    size: 90;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
+#wyloguj{
+    background: url(ramka1.png) center no-repeat; 
 }
-#nickGracza {
-    background-image: url(ramka.png);
-    background-repeat: no-repeat;
+#ramki {
+    background: url(ramka1.png) center no-repeat; 
 }
-#lvl {
-    background-image: url(ramka.png);
-    background-repeat: no-repeat;
+#ikonka{
+    width: 15px;
+    height: 15px;
+    background: url(https://pl159.plemiona.pl/graphic/throbber.gif) center no-repeat; 
 }
-#statki {
-    float: right;
-    width: 15%;
-    background-image: url(ramka.png);
-    background-repeat: no-repeat;
-    top: 50%;
-
-
-}
-#iridium {
-    background-image: url(ramka.png);
-    background-repeat: no-repeat;
-}
-#urudium {
-    background-image: url(ramka.png);
-    background-repeat: no-repeat;
-}
-#prometeid {
-    background-image: url(ramka.png);
-    background-repeat: no-repeat;
-}
-#Duranium {
-    background-image: url(ramka.png);
-    background-repeat: no-repeat;
-}
-#Endurium {
-    background-image: url(ramka.png);
-    background-repeat: no-repeat;
-}
-
