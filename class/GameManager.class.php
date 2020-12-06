@@ -3,9 +3,9 @@ require_once('Village.class.php');
 require_once('Log.class.php');
 class GameManager
 {
-    public $v; //wioska
-    public $l; //logi
-    public $t; //czas ostatniego refresha
+    public $v; 
+    public $l; 
+    public $t; 
 
     public function __construct()
     {
@@ -23,7 +23,6 @@ class GameManager
     {
         $this->v->gain($this->deltaTime());
 
-        //na koniec
         $this->t = time();
     }
 }
