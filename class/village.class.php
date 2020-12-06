@@ -31,7 +31,6 @@ class Village
     public function gain($deltaTime)
     {
         $this->storage['wood'] += $this->woodGain($deltaTime);
-        $this->storage['iron'] += $this->ironGain($deltaTime);
     }
 }
 ?>
