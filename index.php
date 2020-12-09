@@ -63,10 +63,10 @@
                         Żelazo: <?php echo $v->showStorage("iron"); ?>
                     </div>
                     <div class="col-12 col-md-3" id="wyloguj" id="wyloguj">
-                        Miedź: <?php echo $v->showStorage("wood"); ?>
+                        Miedź: <?php echo $v->showStorage("copper"); ?>
                     </div>
                     <div class="col-12 col-md-3" id="wyloguj">
-                        Złoto: <?php echo $v->showStorage("wood"); ?>
+                        Złoto: <?php echo $v->showStorage("gold"); ?>
                     </div>
                 </div>
             </div>
