@@ -14,10 +14,14 @@ class Village
             'townHall' => 1,
             'woodcutter' => 1,
             'ironMine' => 1,
+            'goldMine' => 1,
+            'copperMine' => 1,
         );
         $this->storage = array(
             'wood' => 0,
             'iron' => 0,
+            'gold' => 0,
+            'copper' => 0,
         );
         $this->upgradeCost = array( 
             'woodcutter' => array(
@@ -25,6 +29,7 @@ class Village
                     'wood' => 100,
                     'iron' => 50,
                 ),
+                
                 3 => array(
                     'wood' => 200,
                     'iron' => 100,
@@ -58,6 +63,22 @@ class Village
         
         return $perSecondGain * $deltaTime;
     }
+    private function goldGain(int $deltaTime) : float
+    {
+        $gain = pow($this->buildings['ironMine'],2) * 2500;
+        
+        $perSecondGain = $gain / 3600;
+        
+        return $perSecondGain * $deltaTime;
+    }
+    private function copperGain(int $deltaTime) : float
+    {
+        $gain = pow($this->buildings['ironMine'],2) * 5000;
+        
+        $perSecondGain = $gain / 3600;
+        
+        return $perSecondGain * $deltaTime;
+    }
     public function gain($deltaTime) 
     {
         $this->storage['wood'] += $this->woodGain($deltaTime);
@@ -67,6 +88,14 @@ class Village
         $this->storage['iron'] += $this->ironGain($deltaTime);
         if($this->storage['iron'] > $this->capacity('iron'))
             $this->storage['iron'] = $this->capacity('iron');
+
+        $this->storage['gold'] += $this->goldGain($deltaTime);
+        if($this->storage['gold'] > $this->capacity('gold'))
+            $this->storage['gold'] = $this->capacity('gold');
+
+        $this->storage['copper'] += $this->copperGain($deltaTime);
+        if($this->storage['copper'] > $this->capacity('copper'))
+                $this->storage['copper'] = $this->capacity('copper');
     }
     public function upgradeBuilding(string $buildingName) : bool
     {
@@ -105,8 +134,11 @@ class Village
             case 'iron':
                 return $this->ironGain(3600);
             break;
+            case 'gold':
+                return $this->goldGain(3600);
             default:
-                echo "Nie ma takiego surowca!";
+            case 'copper':
+                return $this->copperGain(3600);
             break;
         }
     }
@@ -134,7 +166,12 @@ class Village
             case 'iron':
                 return $this->ironGain(60*60*6); 
                 break;
-                
+            case 'gold':
+                    return $this->goldGain(60*60*6); 
+                    break;
+            case 'copper':
+                    return $this->goldGain(60*60*6); 
+                    break;
             default:
                 return 0;
                 break;
