@@ -9,7 +9,7 @@ class Village
     public function __construct($gameManger)
     {
         $this->gm = $gameManger;
-        $this->log('Utworzono nową wioskę', 'info');
+        $this->log('Tworzę nową wioskę', 'info');
         $this->buildings = array(
             'townHall' => 1,
             'woodcutter' => 1,
@@ -23,13 +23,12 @@ class Village
             'gold' => 0,
             'copper' => 0,
         );
-        $this->upgradeCost = array( 
+        $this->upgradeCost = array( //tablica wszystkich budynkow
             'woodcutter' => array(
                 2 => array(
                     'wood' => 100,
                     'iron' => 50,
                 ),
-                
                 3 => array(
                     'wood' => 200,
                     'iron' => 100,
@@ -45,27 +44,64 @@ class Village
                 )
             ),
         );
+        $this->log('Utworzono nową wioskę', 'info');
+    }
+    public function buildingList() : array {
+        $buildingList = array();
+        foreach($this->buildings as $buildingName => $buildingLVL)
+        {
+            $building = array();
+            $building['buildingName'] = $buildingName;
+            $building['buildingLVL'] = $buildingLVL;
+            if(isset($this->upgradeCost[$buildingName][$buildingLVL+1] ))
+                $building['upgradeCost'] = $this->upgradeCost[$buildingName][$buildingLVL+1] ;
+            else 
+                $building['upgradeCost'] = array();
+            switch($buildingName) {
+                case 'woodcutter':
+                    $building['hourGain'] = $this->woodGain(60*60);
+                    $building['capacity'] = $this->capacity('wood');
+                break;
+                case 'ironMine':
+                    $building['hourGain'] = $this->ironGain(60*60);
+                    $building['capacity'] = $this->capacity('iron');
+                break;
+                case 'gold':
+                    $building['hourGain'] = $this->goldGain(60*60);
+                    $building['capacity'] = $this->capacity('gold');
+                break;
+                case 'copper':
+                    $building['hourGain'] = $this->copperGain(60*60);
+                    $building['capacity'] = $this->capacity('iron');
+                break;
+
+            }
+            
+            array_push($buildingList, $building);
+        }
+        return $buildingList;
     }
     private function woodGain(int $deltaTime) : float
     {
+        //liczymy zysk na godzine z wzoru poziom_drwala ^ 2
         $gain = pow($this->buildings['woodcutter'],2) * 10000;
-        
+        // liczymy zysk na sekunde (godzina/3600)
         $perSecondGain = $gain / 3600;
-        
+        //zwracamy zysk w czasie $deltaTime
         return $perSecondGain * $deltaTime;
     }
     private function ironGain(int $deltaTime) : float
     {
-       
-        $gain = pow($this->buildings['ironMine'],2) * 7000;
-        
+        //liczymy zysk na godzine z wzoru poziom_drwala ^ 2
+        $gain = pow($this->buildings['ironMine'],2) * 5000;
+        // liczymy zysk na sekunde (godzina/3600)
         $perSecondGain = $gain / 3600;
-        
+        //zwracamy zysk w czasie $deltaTime
         return $perSecondGain * $deltaTime;
     }
     private function goldGain(int $deltaTime) : float
     {
-        $gain = pow($this->buildings['ironMine'],2) * 2500;
+        $gain = pow($this->buildings['goldMine'],2) * 2500;
         
         $perSecondGain = $gain / 3600;
         
@@ -73,7 +109,7 @@ class Village
     }
     private function copperGain(int $deltaTime) : float
     {
-        $gain = pow($this->buildings['ironMine'],2) * 5000;
+        $gain = pow($this->buildings['copperMine'],2) * 3500;
         
         $perSecondGain = $gain / 3600;
         
@@ -92,34 +128,48 @@ class Village
         $this->storage['gold'] += $this->goldGain($deltaTime);
         if($this->storage['gold'] > $this->capacity('gold'))
             $this->storage['gold'] = $this->capacity('gold');
-
-        $this->storage['copper'] += $this->copperGain($deltaTime);
-        if($this->storage['copper'] > $this->capacity('copper'))
-                $this->storage['copper'] = $this->capacity('copper');
+    
+            $this->storage['copper'] += $this->copperGain($deltaTime);
+            if($this->storage['copper'] > $this->capacity('copper'))
+                    $this->storage['copper'] = $this->capacity('copper');
     }
     public function upgradeBuilding(string $buildingName) : bool
     {
         $currentLVL = $this->buildings[$buildingName];
         $cost = $this->upgradeCost[$buildingName][$currentLVL+1];
         foreach ($cost as $key => $value) {
-            
-            
+            //key - nazwa surowca
+            //value koszt surowca
             if($value > $this->storage[$key])
+            {
+                $this->log("Nie udało się ulepszyć budynku - brak surowca: ".$key, "warning");
                 return false;
+            }
         }
         foreach ($cost as $key => $value) {
-            
+            //odejmujemy surowce na budynek
             $this->storage[$key] -= $value;
         }
+        //odwołanie do scheduelra
+        $this->gm->s->add(time()+60, 'Village', 'scheduledBuildingUpgrade', $buildingName);
         
-        $this->buildings[$buildingName] += 1; 
         return true;
+    }
+    public function scheduledBuildingUpgrade(string $buildingName)
+    {
+        //podnies lvl budynku o 1
+        $this->buildings[$buildingName] += 1; 
+        $this->log("Ulepszono budynek: ".$buildingName, "info");
     }
     public function checkBuildingUpgrade(string $buildingName) : bool
     {
         $currentLVL = $this->buildings[$buildingName];
+        if(!isset($this->upgradeCost[$buildingName][$currentLVL+1]))
+            return false;
         $cost = $this->upgradeCost[$buildingName][$currentLVL+1];
         foreach ($cost as $key => $value) {
+            //key - nazwa surowca
+            //value koszt surowca
             if($value > $this->storage[$key])
                 return false;
         }
@@ -139,7 +189,6 @@ class Village
             default:
             case 'copper':
                 return $this->copperGain(3600);
-            break;
         }
     }
     public function showStorage(string $resource) : string 
@@ -150,7 +199,8 @@ class Village
         }
         else
         {
-            return "Nie ma takiego surowca!";
+            $this->log("Nie ma takiego surowca!", "error");
+            return "";
         }
     }
     public function buildingLVL(string $building) : int 
@@ -161,10 +211,10 @@ class Village
     {
         switch ($resource) {
             case 'wood':
-                return $this->woodGain(60*60*12); 
+                return $this->woodGain(60*60*24); //doba
                 break;
             case 'iron':
-                return $this->ironGain(60*60*6); 
+                return $this->ironGain(60*60*12); //12 godzin
                 break;
             case 'gold':
                     return $this->goldGain(60*60*6); 
@@ -172,6 +222,7 @@ class Village
             case 'copper':
                     return $this->goldGain(60*60*6); 
                     break;
+                
             default:
                 return 0;
                 break;
