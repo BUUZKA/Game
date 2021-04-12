@@ -1,7 +1,7 @@
 <?php
 class Log
 {
-    private $l;
+    private $l; //tablica tablic - 1 wiersz - jedna pozycja dziennika
 
     public function __construct()
     {
