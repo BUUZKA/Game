@@ -119,7 +119,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-12 col-md-8" id="obrazek">
+            <div class="col-12 col-md-8" id="essa">
                 <?php if(isset($mainContent)) : 
                     echo $mainContent; ?>
                 <?php else : ?>
