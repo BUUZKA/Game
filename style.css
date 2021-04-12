@@ -1,5 +1,5 @@
-body {
-    background: url(https://images4.alphacoders.com/122/thumb-1920-122706.jpg) no-repeat center center fixed;
+ body\\{
+    background: url(tlodwas.jpg) no-repeat center center fixed;
     background-size: cover;
     font-size: large;
     margin: auto;
@@ -14,10 +14,8 @@ body {
     text-align: center;
     size: 150px;
     color: white; }
-    #obrazek {
-        width: 400px;
-        height: 300px;
-        background: url(mapa.jpg) top left no-repeat; 
+    \#obrazek {
+        background: url(mapa.jpg) top left no-repeat;
     }
 #wojsko{
     width: 400px;
@@ -30,8 +28,6 @@ body {
 #ramki {
     background: url(ramka1.png) center no-repeat; 
 }
-#ikonka{
-    width: 15px;
-    height: 15px;
-    background: url(https://pl159.plemiona.pl/graphic/throbber.gif) center no-repeat; 
+.col-12 {
+    background: url(mapa.jpg);
 }
