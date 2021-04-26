@@ -130,7 +130,16 @@
                         Złoto: <?php echo $v->showStorage("gold"); ?>
                     </div>
                     <div class="col-12 col-md-3">
-                        Mieso: <?php echo $v->showStorage("mieso"); ?>
+                        Zboże: <?php echo $v->showStorage("zboze"); ?>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        Wino: <?php echo $v->showStorage("wino"); ?>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        Mięso: <?php echo $v->showStorage("mieso"); ?>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        Talarki: <?php echo $v->showStorage("talarki"); ?>
                     </div>
                 </div>
             </div>

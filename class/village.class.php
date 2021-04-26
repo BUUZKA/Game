@@ -23,7 +23,10 @@ class Village
             'iron' => 0,
             'gold' => 0,
             'copper' => 0,
+            'zboze' => 0,
             'mieso' => 0,
+            'talarki' => 0,
+            'wino' => 0,
         );
         $this->upgradeCost = array( //tablica wszystkich budynkow
             'woodcutter' => array(
@@ -79,6 +82,22 @@ class Village
                 case 'karczma':
                     $building['hourGain'] = $this->karczmaGain(60*60);
                     $building['capacity'] = $this->capacity('mieso');
+                break;
+                case 'mieso':
+                    $building['hourGain'] = $this->karczmaGain(60*60);
+                    $building['capacity'] = $this->capacity('mieso');
+                break;
+                case 'wino':
+                    $building['hourGain'] = $this->karczmaGain(60*60);
+                    $building['capacity'] = $this->capacity('wino');
+                break;
+                case 'talarki':
+                    $building['hourGain'] = $this->karczmaGain(60*60);
+                    $building['capacity'] = $this->capacity('talarki');
+                break;
+                case 'zboze':
+                    $building['hourGain'] = $this->karczmaGain(60*60);
+                    $building['capacity'] = $this->capacity('zboze');
                 break;
 
             }
@@ -148,9 +167,21 @@ class Village
             if($this->storage['copper'] > $this->capacity('copper'))
                     $this->storage['copper'] = $this->capacity('copper');
 
-        $this->storage['mieso'] += $this->karczmaGain($deltaTime);
+            $this->storage['mieso'] += $this->copperGain($deltaTime);
             if($this->storage['mieso'] > $this->capacity('mieso'))
-                     $this->storage['mieso'] = $this->capacity('mieso');
+                    $this->storage['mieso'] = $this->capacity('mieso');
+        
+            $this->storage['wino'] += $this->karczmaGain($deltaTime);
+            if($this->storage['wino'] > $this->capacity('wino'))
+                    $this->storage['wino'] = $this->capacity('wino');
+        
+            $this->storage['talarki'] += $this->copperGain($deltaTime);
+            if($this->storage['talarki'] > $this->capacity('talarki'))
+                    $this->storage['talarki'] = $this->capacity('talarki');
+        
+            $this->storage['zboze'] += $this->karczmaGain($deltaTime);
+            if($this->storage['zboze'] > $this->capacity('zboze'))
+                    $this->storage['zboze'] = $this->capacity('zboze');
     }
     public function upgradeBuilding(string $buildingName) : bool
     {
@@ -210,6 +241,12 @@ class Village
                 return $this->copperGain(3600);
             case 'mieso':
                 return $this->copperGain(3600);
+            case 'wino':
+                return $this->copperGain(3600);
+            case 'talarki':
+                return $this->copperGain(3600);
+            case 'zboze':
+                return $this->copperGain(3600);
         }
     }
     public function showStorage(string $resource) : string 
@@ -238,14 +275,23 @@ class Village
                 return $this->ironGain(60*60*12); //12 godzin
                 break;
             case 'gold':
-                    return $this->goldGain(60*60*6); 
-                    break;
+                return $this->goldGain(60*60*6); 
+                break;
             case 'copper':
-                    return $this->goldGain(60*60*6); 
-                    break;
+                return $this->goldGain(60*60*6); 
+                break;
             case 'mieso':
-                     return $this->goldGain(60*60*6); 
-                     break;
+                return $this->karczmaGain(60*60*6); 
+                break;
+            case 'wino':
+                return $this->karczmaGain(60*60*6); 
+                break;
+            case 'talarki':
+                return $this->karczmaGain(60*60*6); 
+                break;
+            case 'zboze':
+                return $this->karczmaGain(60*60*6); 
+                break;
                 
             default:
                 return 0;
