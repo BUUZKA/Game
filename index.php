@@ -82,6 +82,9 @@
                     <div class="col-12 col-md-3">
                         Złoto: <?php echo $v->showStorage("gold"); ?>
                     </div>
+                    <div class="col-12 col-md-3">
+                        Mieso: <?php echo $v->showStorage("mieso"); ?>
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-3">
