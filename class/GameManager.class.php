@@ -3,6 +3,7 @@ require_once('Village.class.php');
 require_once('Log.class.php');
 require_once('Scheduler.class.php');
 require_once('Army.class.php');
+require_once('Food.class.php');
 class GameManager
 {
     public $v; //wioska
@@ -10,6 +11,7 @@ class GameManager
     public $l; //logi
     public $s; // scheduler
     public $t; //czas ostatniego refresha
+    public $p; //jedzenie
 
     public function __construct()
     {
@@ -55,5 +57,28 @@ class GameManager
     {
         return $this->a;
     }
+
+    public function newFood($wino, $zboze, $talarki, $mieso)
+{
+    $this->l->log("tworzę nowe jedzenie", "gamemanager");
+    foreach($this->p as &$jedzenie)
+    {
+        
+        {
+            $jedzenie->wino += $wino;
+            $jedzenie->zboze += $zboze;
+            $jedzenie->talarki += $talarki;
+            $jedzenie->mieso += $mieso;
+            return;
+        }
+    }
+    $food = new Food($wino, $zboze, $talarki, $mieso);
+    array_push($this->p, $food);
 }
+public function getFoodList()
+{
+    return $this->p;
+}
+}
+
 ?>
