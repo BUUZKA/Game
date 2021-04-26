@@ -45,6 +45,9 @@
                 case 'townSquare':
                     require('view/townSquare.php');
                 break;
+                case 'townKarczma':
+                    require('view/townKarczma.php');
+                break;
                 default:
                     $gm->l->log("Nieprawidłowa zmienna \"action\"", "controller", "error");
             }
@@ -116,6 +119,9 @@
                     </li>
                     <li>
                         <a href="index.php?action=townSquare">Koszary</a>
+                    </li>
+                    <li>
+                        <a href="index.php?action=townKarczma">Karczma</a>
                     </li>
                 </ul>
             </div>
