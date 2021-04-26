@@ -37,6 +37,7 @@
                         $count = $_REQUEST['cavalry']; 
                         $gm->newArmy(0, 0, $count, $v); 
                     }
+                   
                     require('view/townSquare.php');
                 break;
                 case 'townHall':
@@ -51,7 +52,53 @@
                 default:
                     $gm->l->log("Nieprawidłowa zmienna \"action\"", "controller", "error");
             }
-        }             
+        }           
+        if(isset($_REQUEST['action'])) 
+        {
+            switch($_REQUEST['action'])
+            {
+                case 'upgradeBuilding':
+                    $v->upgradeBuilding($_REQUEST['building']);
+                    require('view/townHall.php');
+                break;
+                case 'newFood':  
+                     
+                    if(isset($_REQUEST['zboze']))
+                    {
+                        $count = $_REQUEST['zboze']; 
+                        $gm->newArmy(0, $count, 0, $v); 
+                    }
+                    if(isset($_REQUEST['wino']))
+                    {
+                        $count = $_REQUEST['wino']; 
+                        $gm->newArmy(0, $count, 0, $v); 
+                    }
+                    if(isset($_REQUEST['mieso']))
+                    {
+                        $count = $_REQUEST['mieso']; 
+                        $gm->newArmy(0, $count, 0, $v); 
+                    }
+                    if(isset($_REQUEST['talarki']))
+                    {
+                        $count = $_REQUEST['talarki']; 
+                        $gm->newArmy(0, $count, 0, $v); 
+                    }
+                    require('view/townKarczma.php');
+                break;
+                case 'townHall':
+                    require('view/townHall.php');
+                break;
+                case 'townSquare':
+                    require('view/townSquare.php');
+                break;
+                case 'townKarczma':
+                    require('view/townKarczma.php');
+                break;
+                default:
+                    $gm->l->log("Nieprawidłowa zmienna \"action\"", "controller", "error");
+                }
+            }
+        
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,6 +128,18 @@
                     </div>
                     <div class="col-12 col-md-3">
                         Złoto: <?php echo $v->showStorage("gold"); ?>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        Zboże: <?php echo $v->showStorage("zboze"); ?>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        Wino: <?php echo $v->showStorage("wino"); ?>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        Mięso: <?php echo $v->showStorage("mieso"); ?>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        Talarki: <?php echo $v->showStorage("talarki"); ?>
                     </div>
                 </div>
             </div>
